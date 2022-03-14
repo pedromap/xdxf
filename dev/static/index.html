@@ -153,6 +153,10 @@
 		<!-- Inicialização mapa --> 
 		<script>
 			mapinit(); 
+			L.control.scale({imperial: false}).addTo(MAPCTRL);
+			const GR = new GestorRetangulo();
+			//MAPCTRL.dragging.disable();
+			MAPCTRL.on('click', function(e) { GR.click(e); });
 		</script> 
 		<!-- Final inicialização mapa -->		
 
