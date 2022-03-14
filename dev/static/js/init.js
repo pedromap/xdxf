@@ -474,3 +474,47 @@ function list_hedit_candidates(p_selschema) {
 	);
 
 }
+
+
+class GestorRetangulo {
+	constructor() {
+		this.pA = null;
+		this.pB = null;
+		this.cnt = 0;
+		this.bounds = null;
+		this.boundingBox = null;
+	}
+	desenha() {
+		this.bounds = [this.pA, this.pB];
+		console.log('a', this.bounds)
+		
+		if (this.boundingBox != null) {
+        MAPCTRL.removeLayer(this.boundingBox);
+		console.log('apagar')
+    }
+
+		// create an orange rectangle
+		this.boundingBox = L.rectangle(this.bounds, {color: "#ff7800", weight: 3});
+		console.log('a', this.boundingBox)
+		console.log ('b',this.boundingBox)
+		MAPCTRL.addLayer(this.boundingBox);	
+		console.log ('b',this.boundingBox)	;
+	}
+	click(evt) {
+		this.cnt = this.cnt + 1;
+
+		if (this.cnt % 2 == 0) {
+			this.pB = [evt.latlng.lat, evt.latlng.lng];
+		} else {
+			this.pA = [evt.latlng.lat, evt.latlng.lng];
+		}
+		
+		if (this.cnt == 2) {
+			this.cnt = 0;
+			this.desenha();
+			this.pA = null;
+			this.pB = null;			
+		}
+		
+	}
+}
