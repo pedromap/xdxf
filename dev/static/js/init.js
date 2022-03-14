@@ -475,46 +475,82 @@ function list_hedit_candidates(p_selschema) {
 
 }
 
-
 class GestorRetangulo {
 	constructor() {
+		//this.pA = [41.1657,-8.6837];
+		//this.pB = [41.1587,-8.6675];
 		this.pA = null;
 		this.pB = null;
 		this.cnt = 0;
 		this.bounds = null;
 		this.boundingBox = null;
+		// this.polArea = null;
+	}
+	querystring() {
+		return "?lat1="+this.pA[0]+"&lng1="+this.pA[1]+"&lat2="+this.pB[0]+"&lng2="+this.pB[1];
 	}
 	desenha() {
+		//let bounds = [this.pA, this.pB];
 		this.bounds = [this.pA, this.pB];
 		console.log('a', this.bounds)
 		
 		if (this.boundingBox != null) {
         MAPCTRL.removeLayer(this.boundingBox);
 		console.log('apagar')
+		//MAPCTRL.removeLayer(marker);
     }
-
 		// create an orange rectangle
+		// let boundingBox = L.rectangle(bounds, {color: "#ff7800", weight: 3});
 		this.boundingBox = L.rectangle(this.bounds, {color: "#ff7800", weight: 3});
 		console.log('a', this.boundingBox)
+		//MAPCTRL.removeLayer(boundingBox);
+		// MAPCTRL.clearLayers();
 		console.log ('b',this.boundingBox)
+		console.log (this.boundingBox.getLatLngs())	;
+		//var polArea = L.GeometryUtil.geodesicArea(this.boundingBox.getLatLngs());
+		//console.log (polArea)	;
 		MAPCTRL.addLayer(this.boundingBox);	
 		console.log ('b',this.boundingBox)	;
+		console.log ('pA lat:',this.pA[0])	;
+		console.log ('pA long:',this.pA[1])	;
+		console.log ('pB long:',this.pB[0])	;
+		console.log ('pB long:',this.pB[1])	;
+		//var marker = L.marker(this.pA).addTo(MAPCTRL)
+		//var marker = L.marker(this.pB).addTo(MAPCTRL)
 	}
 	click(evt) {
 		this.cnt = this.cnt + 1;
 
 		if (this.cnt % 2 == 0) {
+			console.log ("cnt2",this.cnt);
+			//MAPCTRL.removeLayer(this.boundingBox);
+			// MAPCTRL.clearLayers();
+			// MAPCTRL.removeLayer(this.boundingBox);	
+			// limpar layer
+			// if (boundingBox) {
+			//	MAPCTRL.removeLayer(boundingBox)
+			// }
+			//MAPCTRL.clearLayers();
 			this.pB = [evt.latlng.lat, evt.latlng.lng];
 		} else {
+			console.log ("cnt1");
 			this.pA = [evt.latlng.lat, evt.latlng.lng];
 		}
 		
 		if (this.cnt == 2) {
 			this.cnt = 0;
 			this.desenha();
-			this.pA = null;
-			this.pB = null;			
+			//this.abre_url();
+			//this.pA = null;
+			//this.pB = null;			
 		}
 		
 	}
 }
+
+	function abre_url(){
+		//window.open("https://geo.cm-porto.net/xdxf&lat1="+this.pA[0]+"&lng1="+this.pA[1]+"&lat2=" +this.pB[0]+"&lng2=" +this.pB[1]+ "") ;
+		//alert(GR.querystring());
+		window.open("https://geo.cm-porto.net/xdxf&lat1="+GR.querystring()) ;
+	}
+
